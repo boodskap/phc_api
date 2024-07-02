@@ -4,7 +4,7 @@
     "application/json"
   ],
   "info": {
-    "version": "1.0.1",
+    "version": "1.2.4",
     "title": "PHC API",
     "description": "Annamalai University PHC API",
     "termsOfService": "https://boodskap.io/terms-conditions",
@@ -28,12 +28,653 @@
     }
   },
   "paths": {
-    "/DemoEntity/post/list": {
+    "/Profile/get/getprofile": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get User Profile",
+        "description": "Method to Get Profile",
+        "operationId": "getProfile",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProfileRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Profile/post/setprofile": {
       "post": {
         "tags": [
-          "Demo Entity"
+          "User"
         ],
-        "description": "List all vaccines",
+        "summary": "Set User Profile",
+        "description": "Method to Get Profile",
+        "operationId": "setProfile",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProfileRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Dashboard/get/ecount": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Entities Count",
+        "description": "Method to Entities Count",
+        "operationId": "entitiesCount",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tshint",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "TODAY",
+              "THIS_WEEK",
+              "THIS_MONTH",
+              "RANGE"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "begints",
+            "type": "string",
+            "description": "Required if tshint is RANGE (yyyy-MM-ddTHH:mm:ss)"
+          },
+          {
+            "in": "query",
+            "name": "endts",
+            "type": "string",
+            "description": "Required if tshint is RANGE (yyyy-MM-ddTHH:mm:ss)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EntitiesCountRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Dashboard/get/statistics": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Patient Statistics",
+        "description": "Method to Patient Statistics",
+        "operationId": "statistics",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tshint",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "TODAY",
+              "THIS_WEEK",
+              "THIS_MONTH",
+              "RANGE"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "begints",
+            "type": "string",
+            "description": "Required if tshint is RANGE (yyyy-MM-ddTHH:mm:ss)"
+          },
+          {
+            "in": "query",
+            "name": "endts",
+            "type": "string",
+            "description": "Required if tshint is RANGE (yyyy-MM-ddTHH:mm:ss)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StatisticsArrayRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Dashboard/get/appointments": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Appointments Details",
+        "description": "Method to Appointments Details By Current Date",
+        "operationId": "appointments",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AppointmentArrayRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Patient/post/create": {
+      "post": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Create Patient",
+        "description": "Method to Create Patient",
+        "operationId": "createPatient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Patient"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PatientRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Patient/post/update": {
+      "post": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Update Patient",
+        "description": "Method to Update Patient",
+        "operationId": "updatePatient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Patient"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PatientRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Patient/post/list": {
+      "post": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "List Patient",
+        "description": "Method to List all Patient",
+        "operationId": "listPatient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/PatientArrayRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Patient/get/get": {
+      "get": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Get Patient",
+        "description": "Method to Get Patient",
+        "operationId": "getPatient",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PatientRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Patient/del/delete": {
+      "delete": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Delete Patient",
+        "description": "Method to Delete Patient",
+        "operationId": "deletePatient",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Patient/post/schedule": {
+      "post": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Schedule Vaccine",
+        "description": "Method to Schedule Vaccine to Patient",
+        "operationId": "scheduleVaccine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Schedule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ScheduleRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Patient/get/getscheduler": {
+      "get": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Get Vaccine Scheduler",
+        "description": "Method to Get Vaccine Scheduler",
+        "operationId": "getVaccineScheduler",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SchedulerRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Vaccine/post/create": {
+      "post": {
+        "tags": [
+          "Vaccine"
+        ],
+        "summary": "Create Vaccine",
+        "description": "Method to Create Vaccine",
+        "operationId": "createVaccine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Vaccine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/VaccineRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Vaccine/post/update": {
+      "post": {
+        "tags": [
+          "Vaccine"
+        ],
+        "summary": "Update Vaccine",
+        "description": "Method to Update Vaccine",
+        "operationId": "updateVaccine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Vaccine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/VaccineRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Vaccine/post/list": {
+      "post": {
+        "tags": [
+          "Vaccine"
+        ],
+        "summary": "List Vaccines",
+        "description": "Method to List all Vaccine",
         "operationId": "listVaccines",
         "consumes": [
           "application/json"
@@ -69,17 +710,17 @@
           {
             "authToken": []
           }
-        ],
-        "summary": "Cleanup entire data"
+        ]
       }
     },
-    "/DemoEntity/get/get": {
+    "/Vaccine/get/get": {
       "get": {
         "tags": [
-          "Demo Entity"
+          "Vaccine"
         ],
-        "description": "Get all vaccines",
-        "operationId": "getVaccines",
+        "summary": "Get Vaccine",
+        "description": "Method to Get Vaccine",
+        "operationId": "getVaccine",
         "consumes": [
           "*/*"
         ],
@@ -88,23 +729,17 @@
         ],
         "parameters": [
           {
-            "in": "header",
-            "name": "vid",
-            "required": true,
-            "type": "string"
-          },
-          {
             "in": "query",
-            "name": "qid",
+            "name": "id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
-              "$ref": "#/definitions/VaccineArrayRes"
+              "$ref": "#/definitions/VaccineGetRes"
             }
           },
           "401": {
@@ -118,17 +753,17 @@
           {
             "authToken": []
           }
-        ],
-        "summary": "Cleanup entire data"
+        ]
       }
     },
-    "/DemoEntity/del/delete_vaccines": {
+    "/Vaccine/del/delete": {
       "delete": {
         "tags": [
-          "Demo Entity"
+          "Vaccine"
         ],
-        "description": "Delete all vaccines",
-        "operationId": "deleteVaccines",
+        "summary": "Delete Vaccine",
+        "description": "Method to Delete Vaccine",
+        "operationId": "deleteVaccine",
         "consumes": [
           "*/*"
         ],
@@ -137,23 +772,17 @@
         ],
         "parameters": [
           {
-            "in": "header",
-            "name": "vid",
-            "required": true,
-            "type": "string"
-          },
-          {
             "in": "query",
-            "name": "qid",
+            "name": "id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
-              "$ref": "#/definitions/VaccineArrayRes"
+              "$ref": "#/definitions/BaseResponse"
             }
           },
           "401": {
@@ -167,8 +796,611 @@
           {
             "authToken": []
           }
+        ]
+      }
+    },
+    "/Medicine/post/create": {
+      "post": {
+        "tags": [
+          "Medicine"
         ],
-        "summary": "Cleanup entire data"
+        "summary": "Create Medicine",
+        "description": "Method to Create Medicine",
+        "operationId": "createMedicine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Medicine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/MedicineRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Medicine/post/update": {
+      "post": {
+        "tags": [
+          "Medicine"
+        ],
+        "summary": "Update Medicine",
+        "description": "Method to Update Medicine",
+        "operationId": "updateMedicine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Medicine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/MedicineRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Medicine/post/list": {
+      "post": {
+        "tags": [
+          "Medicine"
+        ],
+        "summary": "List Medicine",
+        "description": "Method to List all Medicine",
+        "operationId": "listMedicine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/MedicineArrayRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Medicine/get/get": {
+      "get": {
+        "tags": [
+          "Medicine"
+        ],
+        "summary": "Get Medicine",
+        "description": "Method to Get Medicine",
+        "operationId": "getMedicine",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/MedicineGetRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Medicine/del/delete": {
+      "delete": {
+        "tags": [
+          "Medicine"
+        ],
+        "summary": "Delete Medicine",
+        "description": "Method to Delete Medicine",
+        "operationId": "deleteMedicine",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Equipment/post/create": {
+      "post": {
+        "tags": [
+          "Equipment"
+        ],
+        "summary": "Create Equipment",
+        "description": "Method to Create Equipment",
+        "operationId": "createEquipment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Equipment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EquipmentRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Equipment/post/update": {
+      "post": {
+        "tags": [
+          "Equipment"
+        ],
+        "summary": "Update Equipment",
+        "description": "Method to Update Equipment",
+        "operationId": "updateEquipment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Equipment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EquipmentRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Equipment/post/list": {
+      "post": {
+        "tags": [
+          "Equipment"
+        ],
+        "summary": "List Equipment",
+        "description": "Method to List all Equipment",
+        "operationId": "listEquipment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/EquipmentArrayRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Equipment/get/get": {
+      "get": {
+        "tags": [
+          "Equipment"
+        ],
+        "summary": "Get Equipment",
+        "description": "Method to Get Equipment",
+        "operationId": "getEquipment",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EquipmentGetRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Equipment/del/delete": {
+      "delete": {
+        "tags": [
+          "Equipment"
+        ],
+        "summary": "Delete Equipment",
+        "description": "Method to Delete Equipment",
+        "operationId": "deleteEquipment",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Notification/get/list": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "List Notification",
+        "description": "Method to List all Notification",
+        "operationId": "listNotification",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "in": "query",
+            "name": "size",
+            "type": "integer",
+            "default": 100
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "type": "string",
+            "enum": [
+              "NEWEST",
+              "OLDEST",
+              "ALPHABETIC",
+              "REVERSE_ALPHABETIC"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/NotificationArrayRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Notification/get/search": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Search Notification",
+        "description": "Method to Search all Notification",
+        "operationId": "searchNotification",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "in": "query",
+            "name": "size",
+            "type": "integer",
+            "default": 100
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/NotificationArrayRes"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
+      }
+    },
+    "/Phc/del/cleanup": {
+      "delete": {
+        "tags": [
+          "Phc"
+        ],
+        "summary": "Clean Up All Records",
+        "description": "Method to Clean Up All Records",
+        "operationId": "cleanup",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "417": {
+            "description": "Platform error"
+          }
+        },
+        "security": [
+          {
+            "authToken": []
+          }
+        ]
       }
     }
   },
@@ -226,28 +1458,495 @@
         }
       }
     },
+    "TotalRes": {
+      "type": "object",
+      "required": [
+        "available_count",
+        "shortage_count",
+        "non_available_count"
+      ],
+      "properties": {
+        "available_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "shortage_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "non_available_count": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "PatientTotalRes": {
+      "type": "object",
+      "required": [
+        "male_count",
+        "female_count",
+        "general_count",
+        "pregnant_count",
+        "infant_count"
+      ],
+      "properties": {
+        "male_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "female_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "general_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pregnant_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "infant_count": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "VaccineTotalRes": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TotalRes"
+        }
+      ]
+    },
+    "MedicineTotalRes": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TotalRes"
+        }
+      ]
+    },
+    "EquipmentTotalRes": {
+      "type": "object",
+      "required": [
+        "electronics_count",
+        "utensils_count",
+        "furnitures_count"
+      ],
+      "properties": {
+        "electronics_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "utensils_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "furnitures_count": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "BaseEntity": {
+      "type": "object",
+      "required": [
+        "id",
+        "rtype",
+        "cstamp",
+        "ustamp"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "default": "String"
+        },
+        "rtype": {
+          "type": "string",
+          "default": "String"
+        },
+        "cstamp": {
+          "type": "integer",
+          "format": "int64",
+          "default": -1
+        },
+        "ustamp": {
+          "type": "integer",
+          "format": "int64",
+          "default": -1
+        }
+      }
+    },
+    "Profile": {
+      "type": "object",
+      "required": [
+        "fname",
+        "lname",
+        "email",
+        "phone",
+        "address"
+      ],
+      "properties": {
+        "fname": {
+          "type": "string",
+          "default": "String"
+        },
+        "lname": {
+          "type": "string",
+          "default": "String"
+        },
+        "email": {
+          "type": "string",
+          "default": "String"
+        },
+        "phone": {
+          "type": "string",
+          "default": "String"
+        },
+        "address": {
+          "type": "string",
+          "default": "String"
+        },
+        "city": {
+          "type": "string",
+          "default": "String"
+        },
+        "state": {
+          "type": "string",
+          "default": "String"
+        },
+        "country": {
+          "type": "string",
+          "default": "String"
+        },
+        "zipcode": {
+          "type": "string",
+          "default": "String"
+        },
+        "companyname": {
+          "type": "string",
+          "default": "String"
+        }
+      }
+    },
+    "ProfileInfo": {
+      "type": "object",
+      "required": [
+        "user_id",
+        "role",
+        "ustamp",
+        "rtype"
+      ],
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "default": "String"
+        },
+        "role": {
+          "type": "string",
+          "default": "String"
+        },
+        "ustamp": {
+          "type": "integer",
+          "format": "int64",
+          "default": -1
+        },
+        "rtype": {
+          "type": "string",
+          "default": "String"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/Profile"
+        }
+      ]
+    },
+    "ProfileRes": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "#/definitions/ProfileInfo"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "Patient": {
+      "type": "object",
+      "required": [
+        "patient_type",
+        "patient_name",
+        "patient_id",
+        "dob",
+        "age",
+        "gender"
+      ],
+      "properties": {
+        "patient_type": {
+          "type": "string",
+          "default": "String"
+        },
+        "patient_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "patient_id": {
+          "type": "string",
+          "default": "String"
+        },
+        "dob": {
+          "type": "string",
+          "default": "yyyy-MM-dd"
+        },
+        "age": {
+          "type": "integer",
+          "default": -1
+        },
+        "gender": {
+          "type": "string",
+          "default": "String"
+        },
+        "phone_1": {
+          "type": "string",
+          "default": "String"
+        },
+        "phone_2": {
+          "type": "string",
+          "default": "String"
+        },
+        "mother_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "father_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "district": {
+          "type": "string",
+          "default": "String"
+        },
+        "state": {
+          "type": "string",
+          "default": "String"
+        },
+        "pincode": {
+          "type": "string",
+          "default": "String"
+        },
+        "address": {
+          "type": "string",
+          "default": "String"
+        },
+        "previous_vaccine": {
+          "type": "string",
+          "default": "String"
+        },
+        "next_vaccine": {
+          "type": "string",
+          "default": "String"
+        },
+        "previous_administration": {
+          "type": "string",
+          "default": "String"
+        },
+        "next_administration": {
+          "type": "string",
+          "default": "String"
+        },
+        "allergies": {
+          "type": "string",
+          "default": "String"
+        }
+      }
+    },
+    "PatientInfo": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Patient"
+        },
+        {
+          "$ref": "#/definitions/BaseEntity"
+        }
+      ]
+    },
+    "PatientObject": {
+      "type": "object",
+      "required": [
+        "administred_vaccines"
+      ],
+      "properties": {
+        "administred_vaccines": {
+          "type": "string",
+          "default": "String"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/PatientInfo"
+        }
+      ]
+    },
+    "PatientRes": {
+      "type": "object",
+      "properties": {
+        "patient": {
+          "$ref": "#/definitions/PatientObject"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "PatientArray": {
+      "type": "object",
+      "properties": {
+        "patients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PatientObject"
+          }
+        }
+      }
+    },
+    "PatientArrayRes": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "$ref": "#/definitions/ListRes"
+        },
+        {
+          "$ref": "#/definitions/PatientTotalRes"
+        },
+        {
+          "$ref": "#/definitions/PatientArray"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
     "Vaccine": {
       "type": "object",
       "required": [
-        "name",
-        "type"
+        "vaccine_name",
+        "quantity",
+        "manufact_date",
+        "expire_date"
       ],
       "properties": {
-        "name": {
-          "type": "string"
+        "vaccine_name": {
+          "type": "string",
+          "default": "String"
         },
-        "type": {
-          "type": "integer"
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "default": -1
+        },
+        "batch_no": {
+          "type": "string",
+          "default": "String"
+        },
+        "brand_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "manufact_date": {
+          "type": "string",
+          "description": "yyyy-MM-dd in string",
+          "default": "yyyy-MM-dd"
+        },
+        "expire_date": {
+          "type": "string",
+          "description": "yyyy-MM-dd in string",
+          "default": "yyyy-MM-dd"
+        },
+        "dosage": {
+          "type": "integer",
+          "default": -1
+        },
+        "storage_condition": {
+          "type": "integer",
+          "default": -1
         }
       }
+    },
+    "VaccineInfo": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Vaccine"
+        },
+        {
+          "$ref": "#/definitions/BaseEntity"
+        }
+      ]
+    },
+    "VaccineRes": {
+      "type": "object",
+      "properties": {
+        "vaccine": {
+          "$ref": "#/definitions/VaccineInfo"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "VaccineObject": {
+      "type": "object",
+      "required": [
+        "availability",
+        "days_left"
+      ],
+      "properties": {
+        "availability": {
+          "type": "string"
+        },
+        "days_left": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/VaccineInfo"
+        }
+      ]
+    },
+    "VaccineGetRes": {
+      "type": "object",
+      "properties": {
+        "vaccine": {
+          "$ref": "#/definitions/VaccineObject"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
     },
     "VaccineArray": {
       "type": "object",
       "properties": {
-        "values": {
+        "vaccines": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Vaccine"
+            "$ref": "#/definitions/VaccineObject"
           }
         }
       }
@@ -261,10 +1960,544 @@
           "$ref": "#/definitions/ListRes"
         },
         {
+          "$ref": "#/definitions/VaccineTotalRes"
+        },
+        {
           "$ref": "#/definitions/VaccineArray"
         },
         {
           "type": "object"
+        }
+      ]
+    },
+    "Medicine": {
+      "type": "object",
+      "required": [
+        "medicine_name",
+        "quantity",
+        "manufact_date",
+        "expire_date"
+      ],
+      "properties": {
+        "medicine_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "default": -1
+        },
+        "batch_no": {
+          "type": "string",
+          "default": "String"
+        },
+        "brand_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "manufact_date": {
+          "type": "string",
+          "description": "yyyy-MM-dd in string",
+          "default": "yyyy-MM-dd"
+        },
+        "expire_date": {
+          "type": "string",
+          "description": "yyyy-MM-dd in string",
+          "default": "yyyy-MM-dd"
+        },
+        "storage_condition": {
+          "type": "integer",
+          "default": -1
+        }
+      }
+    },
+    "MedicineInfo": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Medicine"
+        },
+        {
+          "$ref": "#/definitions/BaseEntity"
+        }
+      ]
+    },
+    "MedicineRes": {
+      "type": "object",
+      "properties": {
+        "medicine": {
+          "$ref": "#/definitions/MedicineInfo"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "MedicineObject": {
+      "type": "object",
+      "required": [
+        "availability",
+        "days_left"
+      ],
+      "properties": {
+        "availability": {
+          "type": "string"
+        },
+        "days_left": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/MedicineInfo"
+        }
+      ]
+    },
+    "MedicineGetRes": {
+      "type": "object",
+      "properties": {
+        "vaccine": {
+          "$ref": "#/definitions/MedicineObject"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "MedicineArray": {
+      "type": "object",
+      "properties": {
+        "medicines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MedicineObject"
+          }
+        }
+      }
+    },
+    "MedicineArrayRes": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "$ref": "#/definitions/ListRes"
+        },
+        {
+          "$ref": "#/definitions/MedicineTotalRes"
+        },
+        {
+          "$ref": "#/definitions/MedicineArray"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "Equipment": {
+      "type": "object",
+      "required": [
+        "equipment_name",
+        "equipment_id",
+        "quantity",
+        "equipment_type"
+      ],
+      "properties": {
+        "equipment_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "equipment_id": {
+          "type": "string",
+          "default": "String"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "default": -1
+        },
+        "equipment_type": {
+          "type": "string",
+          "default": "String"
+        },
+        "brand_name": {
+          "type": "string",
+          "default": "String"
+        }
+      }
+    },
+    "EquipmentInfo": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Equipment"
+        },
+        {
+          "$ref": "#/definitions/BaseEntity"
+        }
+      ]
+    },
+    "EquipmentRes": {
+      "type": "object",
+      "properties": {
+        "equipment": {
+          "$ref": "#/definitions/EquipmentInfo"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "EquipmentObject": {
+      "type": "object",
+      "required": [
+        "availability",
+        "days_left"
+      ],
+      "properties": {
+        "availability": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/EquipmentInfo"
+        }
+      ]
+    },
+    "EquipmentGetRes": {
+      "type": "object",
+      "properties": {
+        "vaccine": {
+          "$ref": "#/definitions/EquipmentObject"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "EquipmentArray": {
+      "type": "object",
+      "properties": {
+        "equipments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EquipmentObject"
+          }
+        }
+      }
+    },
+    "EquipmentArrayRes": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "$ref": "#/definitions/ListRes"
+        },
+        {
+          "$ref": "#/definitions/EquipmentTotalRes"
+        },
+        {
+          "$ref": "#/definitions/EquipmentArray"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "Notification": {
+      "type": "object",
+      "required": [
+        "pid",
+        "patient_id",
+        "patient_name",
+        "vaccine_name"
+      ],
+      "properties": {
+        "pid": {
+          "type": "string",
+          "default": "String"
+        },
+        "patient_id": {
+          "type": "string",
+          "default": "String"
+        },
+        "patient_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "previous_vaccine": {
+          "type": "string",
+          "default": "String"
+        },
+        "next_vaccine": {
+          "type": "string",
+          "default": "String"
+        },
+        "phone": {
+          "type": "string",
+          "default": "String"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "failure"
+          ]
+        },
+        "results": {
+          "type": "string",
+          "default": "String"
+        },
+        "errors": {
+          "type": "string",
+          "default": "String"
+        }
+      }
+    },
+    "NotificationInfo": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Notification"
+        },
+        {
+          "$ref": "#/definitions/BaseEntity"
+        }
+      ]
+    },
+    "NotificationArray": {
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NotificationInfo"
+          }
+        }
+      }
+    },
+    "NotificationArrayRes": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "$ref": "#/definitions/ListRes"
+        },
+        {
+          "$ref": "#/definitions/NotificationArray"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "Schedule": {
+      "type": "object",
+      "required": [
+        "pid",
+        "vaccine_name"
+      ],
+      "properties": {
+        "pid": {
+          "type": "string",
+          "default": "String"
+        },
+        "vaccine_name": {
+          "type": "string",
+          "default": "String"
+        }
+      }
+    },
+    "ScheduleRes": {
+      "type": "object",
+      "properties": {
+        "patient": {
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PatientObject"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "SchedulerRes": {
+      "type": "object",
+      "properties": {
+        "vaccines": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "default": "String"
+          }
+        },
+        "vaccines_day": {
+          "type": "object"
+        },
+        "durations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "default": "String"
+          }
+        },
+        "scheduler": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "EntitiesCountInfo": {
+      "type": "object",
+      "properties": {
+        "patients": {
+          "type": "integer",
+          "default": 0
+        },
+        "vaccines": {
+          "type": "integer",
+          "default": 0
+        },
+        "medicines": {
+          "type": "integer",
+          "default": 0
+        },
+        "equipments": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    "EntitiesCountRes": {
+      "type": "object",
+      "properties": {
+        "entities": {
+          "$ref": "#/definitions/EntitiesCountInfo"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        }
+      ]
+    },
+    "StatisticsInfo": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "default": "String"
+        },
+        "male": {
+          "type": "integer",
+          "default": 0
+        },
+        "female": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    "StatisticsArray": {
+      "properties": {
+        "statistics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StatisticsInfo"
+          }
+        }
+      }
+    },
+    "StatisticsArrayRes": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "$ref": "#/definitions/StatisticsArray"
+        }
+      ]
+    },
+    "AppointmentInfo": {
+      "type": "object",
+      "properties": {
+        "patient_name": {
+          "type": "string",
+          "default": "String"
+        },
+        "gender": {
+          "type": "string",
+          "default": "String"
+        },
+        "id": {
+          "type": "string",
+          "default": "String"
+        },
+        "age": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    "AppointmentTotalRes": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "default": 0
+        },
+        "male": {
+          "type": "integer",
+          "default": 0
+        },
+        "female": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    "AppointmentArray": {
+      "type": "object",
+      "properties": {
+        "appointments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppointmentInfo"
+          }
+        }
+      }
+    },
+    "AppointmentArrayRes": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "$ref": "#/definitions/AppointmentTotalRes"
+        },
+        {
+          "$ref": "#/definitions/AppointmentArray"
         }
       ]
     }
