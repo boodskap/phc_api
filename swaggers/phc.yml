@@ -1,0 +1,172 @@
+swagger: "2.0"
+produces: 
+  - "application/json"
+info: 
+  version: "1.0.1"
+  title: "PHC API"
+  description: "Annamalai University PHC API"
+  termsOfService: "https://boodskap.io/terms-conditions"
+  contact: 
+    name: "Boodskap Team"
+  license: 
+    name: "MIT"
+host: au.boodskap.io
+basePath: /api/micro2/service/call/phc
+schemes: 
+  - https
+securityDefinitions:
+  authToken:
+    type: "apiKey"
+    name: "TOKEN"
+    in: "header"
+paths:
+  /DemoEntity/post/list:
+    post:
+      tags:
+        - Demo Entity
+      description: List all vaccines
+      operationId: listVaccines
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ListReq'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/VaccineArrayRes'
+        '401':
+          description: Authentication error
+        '417':
+          description: Platform error
+      security:
+        - authToken: []
+      summary: Cleanup entire data
+  /DemoEntity/get/get:
+    get:
+      tags:
+        - Demo Entity
+      description: Get all vaccines
+      operationId: getVaccines
+      consumes:
+        - "*/*"
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: vid
+          required: true
+          type: "string"
+        - in: query
+          name: qid
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/VaccineArrayRes'
+        '401':
+          description: Authentication error
+        '417':
+          description: Platform error
+      security:
+        - authToken: []
+      summary: Cleanup entire data
+  /DemoEntity/del/delete_vaccines:
+    delete:
+      tags:
+        - Demo Entity
+      description: Delete all vaccines
+      operationId: deleteVaccines
+      consumes:
+        - "*/*"
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: vid
+          required: true
+          type: "string"
+        - in: query
+          name: qid
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/VaccineArrayRes'
+        '401':
+          description: Authentication error
+        '417':
+          description: Platform error
+      security:
+        - authToken: []
+      summary: Cleanup entire data
+definitions: 
+  BaseResponse: 
+    type: object
+    required:
+      - ok
+    properties: 
+      ok: 
+        type: "boolean"
+      msg:
+        type: "string"
+      trace:
+        type: "string"
+  ListReq: 
+    type: object
+    required:
+      - page
+      - size
+    properties: 
+      page: 
+        type: "integer"
+      size:
+        type: "integer"
+        default: 100
+  ListRes: 
+    type: object
+    required:
+      - page
+      - size
+      - total
+    properties: 
+      page: 
+        type: "integer"
+      size:
+        type: "integer"
+      total:
+        type: "integer"
+        format: "int64"
+  Vaccine: 
+    type: object
+    required:
+      - name
+      - type
+    properties: 
+      name: 
+        type: "string"
+      type:
+        type: "integer"
+  VaccineArray: 
+    type: object
+    properties:
+      values:
+        type: array
+        items:
+          $ref: '#/definitions/Vaccine'
+  VaccineArrayRes:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - $ref: '#/definitions/ListRes'
+    - $ref: '#/definitions/VaccineArray'
+    - type: object
